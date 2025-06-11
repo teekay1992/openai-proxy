@@ -1,13 +1,18 @@
 export default async function handler(req, res) {
-  // Allow only your Chrome extension origin
+  // Set CORS headers for all requests
   const allowedOrigin = 'chrome-extension://aehmonnkafkobhjoopfgdcgbjnpobdol';
-  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Max-Age', '86400');
+  
+  // Handle preflight OPTIONS request
   if (req.method === 'OPTIONS') {
-    // Handle CORS preflight request
-    return res.status(200).end();
+    res.status(200).end();
+    return;
   }
   
   if (req.method === 'POST') {
